@@ -13,6 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+- name: NIC name of network
+  command: bash -c "/sbin/ip -4 r | grep ^default | awk '{print $5}'"
+  register: nic_name_of_network
+
+- name: debug nic name
+  debug: msg="NIC name is {{nic_name_of_network}}"
+
 - name: Test that network interfaces exist
   fail:
     msg: "The specified network interfaces {{ item.name }} doesn't exist, consider setting the 'network_checks_list' variable to override these interfaces"
